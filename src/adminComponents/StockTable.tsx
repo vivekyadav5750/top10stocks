@@ -1,9 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import ListItems from "./listItems";
 import AddStockForm from "./AddStockForm";
-import { useSelector } from "react-redux";
-import { selectorStock } from "@/redux/reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchItems, selectorStock } from "@/redux/reducer";
 import dataStockCatergory from "@/data/stockCatergory";
 
 
@@ -19,9 +19,13 @@ type Stock = {
 };
 
 export default function StockTable() {
-  const [initialStockData, setInitialStockData] = useState(dataStockCatergory);
-  const [showAddStockForm, setShowAddStockForm] = useState(false);
+  const dispatch = useDispatch();
+  const {initialStockData : data} = useSelector(selectorStock);
+  // console.log(data);
 
+  const [initialStockData, setInitialStockData] = useState<Stock[]>(data);
+  console.log("initialStockData: ", initialStockData);
+  const [showAddStockForm, setShowAddStockForm] = useState(false);
   const {categorySelected} = useSelector(selectorStock);
 
   const handleAddStock = (newStock: Stock) => {
@@ -33,6 +37,16 @@ export default function StockTable() {
       )
     );
   };
+
+  // dispatch(fetchItems());  and setInitialStockData(data) to update the initialStockData state with the fetched data
+  useEffect(() => {
+    dispatch(fetchItems());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setInitialStockData(data);
+  }
+  , [data]);
 
   return (
     <div>
@@ -70,7 +84,7 @@ export default function StockTable() {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {initialStockData
-                .filter((data) => data.categories === categorySelected)
+                .filter((data) => data.name === categorySelected)
                 .map((data) =>
                   data.stocks.map((stock) => (
                     <ListItems key={stock.name} stock={stock} />
