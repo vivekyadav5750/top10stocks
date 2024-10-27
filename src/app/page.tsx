@@ -25,6 +25,86 @@ export default function HomePage() {
       high52: 170,
       low52: 120,
       moreDetailsLink: "/stocks/2"
+    },
+    {
+      name: "Adani Enterpris",
+      currentPrice: 100,
+      marketCap: "1B",
+      recommendedBuyPrice: 90,
+      oneYearReturn: "10%",
+      high52: 110,
+      low52: 80,
+      moreDetailsLink: "/stocks/1"
+    },
+    {
+      name: "Stock 2",
+      currentPrice: 150,
+      marketCap: "2B",
+      recommendedBuyPrice: 130,
+      oneYearReturn: "15%",
+      high52: 170,
+      low52: 120,
+      moreDetailsLink: "/stocks/2"
+    },
+    {
+      name: "Adani Enterpris",
+      currentPrice: 100,
+      marketCap: "1B",
+      recommendedBuyPrice: 90,
+      oneYearReturn: "10%",
+      high52: 110,
+      low52: 80,
+      moreDetailsLink: "/stocks/1"
+    },
+    {
+      name: "Stock 2",
+      currentPrice: 150,
+      marketCap: "2B",
+      recommendedBuyPrice: 130,
+      oneYearReturn: "15%",
+      high52: 170,
+      low52: 120,
+      moreDetailsLink: "/stocks/2"
+    },
+    {
+      name: "Adani Enterpris",
+      currentPrice: 100,
+      marketCap: "1B",
+      recommendedBuyPrice: 90,
+      oneYearReturn: "10%",
+      high52: 110,
+      low52: 80,
+      moreDetailsLink: "/stocks/1"
+    },
+    {
+      name: "Stock 2",
+      currentPrice: 150,
+      marketCap: "2B",
+      recommendedBuyPrice: 130,
+      oneYearReturn: "15%",
+      high52: 170,
+      low52: 120,
+      moreDetailsLink: "/stocks/2"
+    },
+    {
+      name: "Adani Enterpris",
+      currentPrice: 100,
+      marketCap: "1B",
+      recommendedBuyPrice: 90,
+      oneYearReturn: "10%",
+      high52: 110,
+      low52: 80,
+      moreDetailsLink: "/stocks/1"
+    },
+    {
+      name: "Stock 2",
+      currentPrice: 150,
+      marketCap: "2B",
+      recommendedBuyPrice: 130,
+      oneYearReturn: "15%",
+      high52: 170,
+      low52: 120,
+      moreDetailsLink: "/stocks/2"
     }
   ];
 

@@ -1,27 +1,17 @@
+"use client"
 import React from "react";
+import { useSelector } from "react-redux";
+import { selectorStock } from "@/redux/reducer";
+import dataStockCatergory from "@/data/stockCatergory";
 
-type Stock = {
-  name: string;
-  currentPrice: number;
-  marketCap: string;
-  recommendedBuyPrice: number;
-  oneYearReturn: string;
-  high52: number;
-  low52: number;
-  moreDetailsLink: string;
-};
 
-type StockTableProps = {
-  stocks: Stock[];
-};
-
-export default function StockTable({ stocks }: StockTableProps) {
+export default function StockTable() {
+  const initialStockData = dataStockCatergory;
+  const { categorySelected } = useSelector(selectorStock);
   return (
     <div>
       <div className="flex justify-center">
-        <h1 className="text-2xl font-semibold font-mono p-1  ">
-          Stocks
-        </h1>
+        <h1 className="text-2xl font-semibold font-mono p-1  ">{categorySelected}</h1>
       </div>
 
       <div className="container mx-auto  overflow-auto">
@@ -44,33 +34,39 @@ export default function StockTable({ stocks }: StockTableProps) {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200 p-2">
-              {stocks.map((stock, index) => (
-                <tr
-                  key={index}
-                  className="hover:bg-gray-100 transition-colors text-gray-700"
-                >
-                  {/* Sticky column for the name */}
-                  <td className="py-1  sm:p-3 sticky left-0 bg-white z-10 border-2">
-                    {stock.name}
-                  </td>
-                  <td className="py-1  sm:p-3">{stock.currentPrice}</td>
-                  <td className="py-1  sm:p-3">{stock.marketCap}</td>
-                  <td className="py-1  sm:p-3">{stock.recommendedBuyPrice}</td>
-                  <td className="py-1  sm:p-3">{stock.oneYearReturn}</td>
-                  <td className="py-1  sm:p-3">{stock.high52}</td>
-                  <td className="py-1  sm:p-3">{stock.low52}</td>
-                  <td className="py-1  sm:p-3">
-                    <a
-                      href={stock.moreDetailsLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 hover:underline"
+              {initialStockData
+                .filter((data) => data.categories === categorySelected)
+                .map((data) =>
+                  data.stocks.map((stock) => (
+                    <tr
+                      key={stock.name}
+                      className="hover:bg-gray-100 transition-colors text-gray-700"
                     >
-                      View on MoneyControl
-                    </a>
-                  </td>
-                </tr>
-              ))}
+                      {/* Sticky column for the name */}
+                      <td className="py-1  sm:p-3 sticky left-0 bg-white z-10 border-2">
+                        {stock.name}
+                      </td>
+                      <td className="py-1  sm:p-3">{stock.currentPrice}</td>
+                      <td className="py-1  sm:p-3">{stock.marketCap}</td>
+                      <td className="py-1  sm:p-3">
+                        {stock.recommendedBuyPrice}
+                      </td>
+                      <td className="py-1  sm:p-3">{stock.oneYearReturn}</td>
+                      <td className="py-1  sm:p-3">{stock.high52}</td>
+                      <td className="py-1  sm:p-3">{stock.low52}</td>
+                      <td className="py-1  sm:p-3">
+                        <a
+                          href={stock.moreDetailsLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500 hover:underline"
+                        >
+                          View on MoneyControl
+                        </a>
+                      </td>
+                    </tr>
+                  ))
+                )}
             </tbody>
           </table>
         </div>

@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Popup from "@/components/Popup";
+import Providers from "@/redux/providers";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -39,12 +40,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-green-200  antialiased min-h-screen flex flex-col w-full `}
+        className={`${geistSans.variable} ${geistMono.variable}   antialiased min-h-screen flex flex-col w-full `}
       >
-        <Popup/>
-        <Navbar />
-        {children}
-        <Footer />
+        <Providers>
+          {/* <Popup/> */}
+          <Navbar />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

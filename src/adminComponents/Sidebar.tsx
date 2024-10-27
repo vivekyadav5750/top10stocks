@@ -60,7 +60,7 @@ export default function Sidebar() {
         <li className="space-y-2">
           <h2 className="font-semibold font-mono text-xl border-b-4 border-gray-700">Indices </h2>
           <ul className="space-y-2">
-            {INDEX_ITEMS.map((item, index) => (
+            {INDEX_ITEMS.map((item) => (
               <li
                 key={item.title}
                 // className={`text-md font-thin font-mono ${index % 2 === 0 ? 'bg-white' : 'bg-gray-200'} p-1`}
@@ -87,7 +87,7 @@ export default function Sidebar() {
 
           {sectorExpanded && (
             <ul className="space-y-2">
-              {Sectors.map((item, index) => (
+              {Sectors.map((item) => (
                 <li
                   key={item.title}
                   // className={`text-md font-mono ${index % 2 === 0 ? 'bg-white' : 'bg-gray-200'} p-1`}
