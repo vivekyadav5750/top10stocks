@@ -1,37 +1,24 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ListItems from "./listItems";
 import AddStockForm from "./AddStockForm";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchItems, selectorStock } from "@/redux/reducer";
-import dataStockCatergory from "@/data/stockCatergory";
-
-
-type Stock = {
-  name: string;
-  currentPrice: number;
-  marketCap: string;
-  recommendedBuyPrice: number;
-  oneYearReturn: string;
-  high52: number;
-  low52: number;
-  moreDetailsLink: string;
-};
+import { fetchItems } from "@/redux/reducer";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { Stock } from "@/types";
+import { Loader } from "lucide-react";
 
 export default function StockTable() {
-  const dispatch = useDispatch();
-  const {initialStockData : data} = useSelector(selectorStock);
-  // console.log(data);
+  const dispatch = useAppDispatch();
+  const top10Stocks = useAppSelector((state) => state.top10Stocks);
+  const { categorySelected } = top10Stocks;
 
-  const [initialStockData, setInitialStockData] = useState<Stock[]>(data);
-  console.log("initialStockData: ", initialStockData);
+  const [initialStockData, setInitialStockData] = useState(top10Stocks.data);
   const [showAddStockForm, setShowAddStockForm] = useState(false);
-  const {categorySelected} = useSelector(selectorStock);
 
   const handleAddStock = (newStock: Stock) => {
     setInitialStockData((prevData) =>
       prevData.map((data) =>
-        data.sector === sector_stock_data
+        data.name === categorySelected
           ? { ...data, stocks: [...data.stocks, newStock] }
           : data
       )
@@ -44,9 +31,8 @@ export default function StockTable() {
   }, [dispatch]);
 
   useEffect(() => {
-    setInitialStockData(data);
-  }
-  , [data]);
+    setInitialStockData(top10Stocks.data);
+  }, [top10Stocks]);
 
   return (
     <div>
@@ -63,36 +49,42 @@ export default function StockTable() {
       </div>
 
       <div className="container mx-auto overflow-auto">
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table className="min-w-full table-auto divide-y divide-gray-200 p-2 bg-gray-100">
-            <thead className="bg-blue-500 text-white">
-              <tr>
-                <th className="py-1 px-8 sm:p-3 text-left sticky left-0 bg-blue-700 z-10 border-r-1">
-                  Company
-                </th>
-                <th className="py-1 px-3 sm:p-3 text-left">Current Price</th>
-                <th className="py-1 px-3 sm:p-3 text-left">Market Cap</th>
-                <th className="py-1 px-3 sm:p-3 text-left">
-                  Recommended Buy Price
-                </th>
-                <th className="py-1 px-3 sm:p-3 text-left">1-Year Return</th>
-                <th className="py-1 px-3 sm:p-3 text-left">52-Week High</th>
-                <th className="py-1 px-3 sm:p-3 text-left">52-Week Low</th>
-                <th className="py-1 px-3 sm:p-3 text-left">More Details</th>
-                <th className="py-1 px-3 sm:p-3 text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {initialStockData
-                .filter((data) => data.name === categorySelected)
-                .map((data) =>
-                  data.stocks.map((stock) => (
-                    <ListItems key={stock.name} stock={stock} />
-                  ))
-                )}
-            </tbody>
-          </table>
-        </div>
+        {top10Stocks.loading ? (
+          <div className="w-full flex justify-center items-center h-40">
+            <Loader className="animate-spin" />
+          </div>
+        ) : (
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table className="min-w-full table-auto divide-y divide-gray-200 p-2 bg-gray-100">
+              <thead className="bg-blue-500 text-white">
+                <tr>
+                  <th className="py-1 px-8 sm:p-3 text-left sticky left-0 bg-blue-700 z-10 border-r-1">
+                    Company
+                  </th>
+                  <th className="py-1 px-3 sm:p-3 text-left">Current Price</th>
+                  <th className="py-1 px-3 sm:p-3 text-left">Market Cap</th>
+                  <th className="py-1 px-3 sm:p-3 text-left">
+                    Recommended Buy Price
+                  </th>
+                  <th className="py-1 px-3 sm:p-3 text-left">1-Year Return</th>
+                  <th className="py-1 px-3 sm:p-3 text-left">52-Week High</th>
+                  <th className="py-1 px-3 sm:p-3 text-left">52-Week Low</th>
+                  <th className="py-1 px-3 sm:p-3 text-left">More Details</th>
+                  <th className="py-1 px-3 sm:p-3 text-left">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {initialStockData
+                  .filter((data) => data.name === categorySelected)
+                  .map((data) =>
+                    data.stocks.map((stock) => (
+                      <ListItems key={stock.name} stock={stock} />
+                    ))
+                  )}
+              </tbody>
+            </table>
+          </div>
+        )}
         <div className="flex justify-center mt-4">
           <button className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-700">
             Submit Changes

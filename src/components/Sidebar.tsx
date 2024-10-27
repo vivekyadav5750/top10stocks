@@ -16,7 +16,7 @@ export default function Sidebar() {
 
   const Sectors = [
     {
-      title: "Finance/Bank", 
+      title: "Finance/Bank",
       href: "/docs/primitives/alert-dialog",
       description:
         "A bank is a financial institution that accepts deposits from the public and creates a demand deposit while simultaneously making loans."
@@ -58,14 +58,21 @@ export default function Sidebar() {
       <ul className="space-y-4 ">
         {/* Indices  */}
         <li className="space-y-2">
-          <h2 className="font-semibold font-mono text-xl border-b-4 border-gray-700">Indices </h2>
+          <h2 className="font-semibold font-mono text-xl border-b-4 border-gray-700">
+            Indices{" "}
+          </h2>
           <ul className="space-y-2">
-            {INDEX_ITEMS.map((item, index) => (
+            {INDEX_ITEMS.map((item) => (
               <li
                 key={item.title}
                 // className={`text-md font-thin font-mono ${index % 2 === 0 ? 'bg-white' : 'bg-gray-200'} p-1`}
                 className={`text-md font-thin font-mono shadow-[rgba(37,142,133,0.2)_-3px_0px_2px_0px] p-1 rounded-sm hover:bg-white`}
-                onClick={() => dispatch({ type: "top10Stocks/setSector", payload: item.title })}
+                onClick={() =>
+                  dispatch({
+                    type: "top10Stocks/setSector",
+                    payload: item.title
+                  })
+                }
               >
                 {item.title}
               </li>
@@ -76,7 +83,9 @@ export default function Sidebar() {
         {/* make sector expandable and like drop down */}
         <li className="space-y-2">
           <div className="flex items-center">
-            <h2 className="font-semibold w-full font-mono text-xl border-b-4 border-gray-700">Sectors</h2>
+            <h2 className="font-semibold w-full font-mono text-xl border-b-4 border-gray-700">
+              Sectors
+            </h2>
             <button
               onClick={() => setSectorExpanded(!sectorExpanded)}
               className="ml-auto p-1"
@@ -87,12 +96,17 @@ export default function Sidebar() {
 
           {sectorExpanded && (
             <ul className="space-y-2">
-              {Sectors.map((item, index) => (
+              {Sectors.map((item) => (
                 <li
                   key={item.title}
                   // className={`text-md font-mono ${index % 2 === 0 ? 'bg-white' : 'bg-gray-200'} p-1`}
                   className={`text-md font-thin font-mono shadow-[rgba(37,142,133,0.2)_-3px_0px_2px_0px] p-1 rounded-sm hover:bg-white`}
-                  onClick={() => dispatch({ type: "top10Stocks/setSector", payload: item.title })}
+                  onClick={() =>
+                    dispatch({
+                      type: "top10Stocks/setSector",
+                      payload: item.title
+                    })
+                  }
                 >
                   {item.title}
                 </li>

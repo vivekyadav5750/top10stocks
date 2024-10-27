@@ -1,26 +1,18 @@
+import { Stock } from "@/types";
 import React, { useEffect, useState } from "react";
-
-type Stock = {
-  name: string;
-  currentPrice: number;
-  marketCap: string;
-  recommendedBuyPrice: number;
-  oneYearReturn: string;
-  high52: number;
-  low52: number;
-  moreDetailsLink: string;
-};
 
 export default function ListItems({ stock }: { stock: Stock }) {
   const [editMode, setEditMode] = useState(false);
   const [currentPrice, setCurrentPrice] = useState(stock.currentPrice || 0);
   const [marketCap, setMarketCap] = useState(stock.marketCap || "");
-  const [recommendedBuyPrice, setRecommendedBuyPrice] = useState(stock.recommendedBuyPrice || 0);
+  const [recommendedBuyPrice, setRecommendedBuyPrice] = useState(
+    stock.recommendedBuyPrice || 0
+  );
   const [oneYearReturn, setOneYearReturn] = useState(stock.oneYearReturn || "");
   const [high52, setHigh52] = useState(stock.high52 || 0);
   const [low52, setLow52] = useState(stock.low52 || 0);
 
- useEffect(() => {
+  useEffect(() => {
     setCurrentPrice(stock.currentPrice);
     setMarketCap(stock.marketCap);
     setRecommendedBuyPrice(stock.recommendedBuyPrice);
@@ -107,7 +99,7 @@ export default function ListItems({ stock }: { stock: Stock }) {
         />
       </td>
       <td className="p-3 sm:p-3 text-left">
-        <a href={stock.moreDetailsLink}>More Details</a>
+        <a href={stock.moreInfo}>More Details</a>
       </td>
       <td className="p-3 sm:p-3 text-left space-x-2">
         <button

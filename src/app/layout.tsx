@@ -43,7 +43,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable}   antialiased min-h-screen flex flex-col w-full `}
       >
         <Providers>
-          {/* <Popup/> */}
+          <Popup />
           <Navbar />
           {children}
           <Footer />

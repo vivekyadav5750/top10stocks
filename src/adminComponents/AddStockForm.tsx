@@ -1,15 +1,5 @@
+import { Stock } from "@/types";
 import React, { useState } from "react";
-
-type Stock = {
-  name: string;
-  currentPrice: number;
-  marketCap: string;
-  recommendedBuyPrice: number;
-  oneYearReturn: string;
-  high52: number;
-  low52: number;
-  moreDetailsLink: string;
-};
 
 type AddStockFormProps = {
   onClose: () => void;
@@ -25,7 +15,7 @@ export default function AddStockForm({ onClose, onSubmit }: AddStockFormProps) {
     oneYearReturn: "",
     high52: 0,
     low52: 0,
-    moreDetailsLink: ""
+    moreInfo: ""
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,8 +128,8 @@ export default function AddStockForm({ onClose, onSubmit }: AddStockFormProps) {
               <label className="block">More Details Link</label>
               <input
                 type="text"
-                name="moreDetailsLink"
-                value={newStock.moreDetailsLink}
+                name="moreInfo"
+                value={newStock.moreInfo}
                 onChange={handleChange}
                 className="border p-2 w-full"
                 required
