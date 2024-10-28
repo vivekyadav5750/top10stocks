@@ -8,22 +8,28 @@ import {
   ChevronDown,
   ChevronUp
 } from "lucide-react";
+import { useAppDispatch } from "@/redux/hook";
+import { setSector } from "@/redux/reducer";
 
 export default function Navbar() {
+  const dispatch = useAppDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [sectorExpanded, setSectorExpanded] = useState(false);
+
   const NAV_ITEMS = [
-    { title: "Nifty50", path: "/about" },
-    { title: "LargeCap", path: "/shop" },
+    { title: "Nifty 50", path: "/about" },
+    { title: "Large Cap", path: "/shop" },
     { title: "Mid Cap", path: "/categories" },
     { title: "Small Cap", path: "/contact" }
   ];
 
   const sector = [
-    { title: "Auto", path: "/auto" },
-    { title: "Bank", path: "/bank" },
-    { title: "FMCG", path: "/fmcg" },
-    { title: "IT", path: "/it" }
+    { title: "Automobile" },
+    { title: "Finance/Bank" },
+    { title: "FMCG" },
+    { title: "Technology" },
+    { title: "Defence" },
+    { title: "Energy" }
   ];
 
   return (
@@ -48,11 +54,14 @@ export default function Navbar() {
         {/* large and medium screen nav items  */}
         <div className="hidden md:flex w-3/4   items-center space-x-1  ">
           {NAV_ITEMS.map((item) => (
-            <Link key={item.title} href={item.path}>
+            <div
+              key={item.title}
+              onClick={() => dispatch(setSector(item.title))}
+            >
               <span className="w- flex text-md font-medium hover:bg-accent hover:text-accent-foreground px-4 py-2 rounded-md   ">
                 {item.title}
               </span>
-            </Link>
+            </div>
           ))}
           <NavigationMenuDemo />
         </div>
@@ -77,17 +86,19 @@ export default function Navbar() {
           </div>
 
           {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.title}
-              href={item.path}
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <span className="font-medium w-full font-mono text-xl border-b-2 hover:text-slate-500 ">
+            // onClick={() => setIsMenuOpen(!isMenuOpen)}
+            <div key={item.title}>
+              <span
+                className="font-medium w-full font-mono text-xl border-b-2 hover:text-slate-500"
+                onClick={() => {
+                  dispatch(setSector(item.title));
+                  setIsMenuOpen(!isMenuOpen);
+                }}
+              >
                 {item.title}
               </span>
-            </Link>
+            </div>
           ))}
-
 
           {/* sector with ChevronUp and ChevronDown */}
           <div className="flex items-center">
@@ -105,13 +116,19 @@ export default function Navbar() {
             {sectorExpanded && (
               <ul className="space-y-2">
                 {sector.map((item) => (
-                  <li key={item.title} className={`text-lg font-mono p-1`}>
-                    <Link href={item.path}>{item.title}</Link>
+                  <li
+                    key={item.title}
+                    className={`text-lg font-mono p-1`}
+                    onClick={() => {
+                      dispatch(setSector(item.title));
+                      setIsMenuOpen(!isMenuOpen);
+                    }}
+                  >
+                    {item.title}
                   </li>
                 ))}
               </ul>
             )}
-
           </div>
         </div>
       </div>

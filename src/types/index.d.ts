@@ -16,3 +16,8 @@ export type StockCategories = {
   description: string;
   stocks: Stock[];
 };
+
+export type StockWithCategory = {
+  category: string;
+  stock: Stock;
+};

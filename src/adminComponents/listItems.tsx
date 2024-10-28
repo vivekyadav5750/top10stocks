@@ -1,8 +1,14 @@
 import { Stock } from "@/types";
 import React, { useEffect, useState } from "react";
+import {updateItem, deleteItem} from "@/redux/reducer";
+import { useAppDispatch } from "@/redux/hook";
+import { PencilLine, Trash2 } from "lucide-react";
 
 export default function ListItems({ stock }: { stock: Stock }) {
   const [editMode, setEditMode] = useState(false);
+  const dispatch = useAppDispatch();
+
+  // state for each parameter of the stock
   const [currentPrice, setCurrentPrice] = useState(stock.currentPrice || 0);
   const [marketCap, setMarketCap] = useState(stock.marketCap || "");
   const [recommendedBuyPrice, setRecommendedBuyPrice] = useState(
@@ -20,6 +26,31 @@ export default function ListItems({ stock }: { stock: Stock }) {
     setHigh52(stock.high52);
     setLow52(stock.low52);
   }, [stock]);
+
+  const handleSave = () => {
+    console.log("Save");
+    setEditMode(!editMode);
+    
+    const updatedStock = {
+      // ...stock,
+      _id:stock._id,
+      name:stock.name,
+      marketCap,
+      currentPrice,
+      recommendedBuyPrice,
+      oneYearReturn,
+      high52,
+      low52,
+      moreInfo:stock.moreInfo
+    };
+    console.log("updatedStock : ", updatedStock);
+    dispatch(updateItem(updatedStock));
+  };
+
+  const handleDelete = () => {
+    console.log("Delete");
+    dispatch(deleteItem(stock));
+  }
 
   return (
     <tr key={stock.name}>
@@ -101,15 +132,27 @@ export default function ListItems({ stock }: { stock: Stock }) {
       <td className="p-3 sm:p-3 text-left">
         <a href={stock.moreInfo}>More Details</a>
       </td>
-      <td className="p-3 sm:p-3 text-left space-x-2">
-        <button
-          className="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-700"
-          onClick={() => setEditMode(!editMode)}
-        >
-          {editMode ? "Save" : "Edit"}
-        </button>
-        <button className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-700">
-          Delete
+      <td className="flex p-3 sm:p-3 text-left space-x-2">
+        {!editMode ? (
+          <button
+            className="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-700"
+            onClick={() => setEditMode(!editMode)}
+          >
+            {" "}
+            <PencilLine />{" "}
+          </button>
+        ) : (
+          <button
+            className="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-700"
+            onClick={() => handleSave()}
+          >
+            {" "}
+            Save{" "}
+          </button>
+        )}
+        <button className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-700" 
+        onClick={() => handleDelete()}>
+          <Trash2 />
         </button>
       </td>
     </tr>

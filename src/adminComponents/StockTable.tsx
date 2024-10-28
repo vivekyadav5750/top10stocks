@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import ListItems from "./listItems";
 import AddStockForm from "./AddStockForm";
-import { fetchItems } from "@/redux/reducer";
+import { addItem, fetchItems } from "@/redux/reducer";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { Stock } from "@/types";
 import { Loader } from "lucide-react";
@@ -10,29 +10,27 @@ import { Loader } from "lucide-react";
 export default function StockTable() {
   const dispatch = useAppDispatch();
   const top10Stocks = useAppSelector((state) => state.top10Stocks);
-  const { categorySelected } = top10Stocks;
-
-  const [initialStockData, setInitialStockData] = useState(top10Stocks.data);
+  const { data, categorySelected } = top10Stocks;
+  
   const [showAddStockForm, setShowAddStockForm] = useState(false);
-
+  
   const handleAddStock = (newStock: Stock) => {
-    setInitialStockData((prevData) =>
-      prevData.map((data) =>
-        data.name === categorySelected
-          ? { ...data, stocks: [...data.stocks, newStock] }
-          : data
-      )
-    );
+    console.log("newStock : ", newStock);
+    if (categorySelected) {
+      dispatch(addItem({ category: categorySelected, stock: newStock }));
+    } else {
+      console.error("Category is undefined");
+    }
+    console.log("submitting new stock");
   };
 
-  // dispatch(fetchItems());  and setInitialStockData(data) to update the initialStockData state with the fetched data
   useEffect(() => {
     dispatch(fetchItems());
   }, [dispatch]);
 
-  useEffect(() => {
-    setInitialStockData(top10Stocks.data);
-  }, [top10Stocks]);
+  // useEffect(() => {
+  //   setInitialStockData(top10Stocks.data);
+  // }, [top10Stocks]);
 
   return (
     <div>
@@ -55,7 +53,7 @@ export default function StockTable() {
           </div>
         ) : (
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="min-w-full table-auto divide-y divide-gray-200 p-2 bg-gray-100">
+            <table className="text-sm min-w-full table-auto divide-y divide-gray-200 p-2 bg-gray-100">
               <thead className="bg-blue-500 text-white">
                 <tr>
                   <th className="py-1 px-8 sm:p-3 text-left sticky left-0 bg-blue-700 z-10 border-r-1">
@@ -74,7 +72,7 @@ export default function StockTable() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {initialStockData
+                {data
                   .filter((data) => data.name === categorySelected)
                   .map((data) =>
                     data.stocks.map((stock) => (
@@ -85,11 +83,11 @@ export default function StockTable() {
             </table>
           </div>
         )}
-        <div className="flex justify-center mt-4">
+        {/* <div className="flex justify-center mt-4">
           <button className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-700">
             Submit Changes
           </button>
-        </div>
+        </div> */}
       </div>
 
       {showAddStockForm && (

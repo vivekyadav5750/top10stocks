@@ -24,15 +24,15 @@ const TABLE_COLUMNS = [
 ];
 
 export default function StockTable() {
-  const stockState = useAppSelector((state) => state.top10Stocks);
   const disptach = useAppDispatch();
-  const categorySelected = useAppSelector(
-    (state) => state.top10Stocks.categorySelected
-  );
+  const stockState = useAppSelector((state) => state.top10Stocks);
+  const categorySelected = stockState.categorySelected;
+
 
   useEffect(() => {
     disptach(fetchItems());
   }, [disptach]);
+
   return (
     <div>
       <div className="flex justify-center">
@@ -56,7 +56,7 @@ export default function StockTable() {
                   </TableHead>
                   {TABLE_COLUMNS.map((column, index) => (
                     <TableHead
-                      className={`text-inherit text-center ${
+                      className={`text-inherit text-right ${
                         TABLE_COLUMNS.length - 1 === index ? "w-auto" : "w-min"
                       }`}
                       key={column}

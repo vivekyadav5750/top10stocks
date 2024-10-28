@@ -1,62 +1,56 @@
 "use client";
-
 import * as React from "react";
-
 import { cn } from "@/lib/utils";
-// import { Icons } from "@/components/icons"
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
+  NavigationMenuTrigger
 } from "@/components/ui/navigation-menu";
+import { useAppDispatch } from "@/redux/hook";
+import { setSector } from "@/redux/reducer";
 
-const components: { title: string; href: string; description: string }[] = [
+const components: { title: string; description: string }[] = [
   {
-    title: "Banks",
-    href: "/docs/primitives/alert-dialog",
+    title: "Finance/Bank",
     description:
-    // description about banks sector in stock market
-      "A bank is a financial institution that accepts deposits from the public and creates a demand deposit while simultaneously making loans.",
+      // description about banks sector in stock market
+      "A bank is a financial institution that accepts deposits from the public and creates a demand deposit while simultaneously making loans."
   },
   {
-    title: "Software & IT Services",
-    href: "/docs/primitives/hover-card",
+    title: "Technology",
     description:
-      "Software & IT Services sector includes companies that develop software in various fields such as the Internet, applications, systems, and databases.",
+      "Software & IT Services sector includes companies that develop software in various fields such as the Internet, applications, systems, and databases."
   },
   {
     title: "Automobile",
-    href: "/docs/primitives/progress",
     description:
-      "The automobile sector includes companies that design, develop, manufacture, market, and sell motor vehicles.",
+      "The automobile sector includes companies that design, develop, manufacture, market, and sell motor vehicles."
   },
   {
-    title: "FMGC",
-    href: "/docs/primitives/scroll-area",
-    description: "The FMCG sector includes companies that produce and distribute consumer goods.",
+    title: "FMCG",
+    description:
+      "The FMCG sector includes companies that produce and distribute consumer goods."
   },
   {
-    title: "Oil & Gas and Metals & Mining and Energy", 
-    href: "/docs/primitives/tabs",
+    title: "Energy",
     description:
-      "The Oil & Gas and Metals & Mining and Energy sector includes companies that explore, develop, and produce natural resources.",
+      "The Oil & Gas and Metals & Mining and Energy sector includes companies that explore, develop, and produce natural resources."
   },
   {
     title: "Defence",
-    href: "/docs/primitives/tooltip",
     description:
-      "The Defence sector includes companies that manufacture and distribute military equipment and services.",
-  },
+      "The Defence sector includes companies that manufacture and distribute military equipment and services."
+  }
 ];
 
 export function NavigationMenuDemo() {
+  const dispatch = useAppDispatch();
   return (
     <NavigationMenu>
       <NavigationMenuList>
-       
         <NavigationMenuItem>
           <NavigationMenuTrigger>Sector Wise</NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -65,7 +59,7 @@ export function NavigationMenuDemo() {
                 <ListItem
                   key={component.title}
                   title={component.title}
-                  href={component.href}
+                  onClick={() => dispatch(setSector(component.title))}
                 >
                   {component.description}
                 </ListItem>
@@ -73,7 +67,6 @@ export function NavigationMenuDemo() {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
-       
       </NavigationMenuList>
     </NavigationMenu>
   );
