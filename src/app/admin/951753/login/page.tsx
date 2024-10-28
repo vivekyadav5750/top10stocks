@@ -14,8 +14,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAppDispatch } from "@/redux/hook";
 import { userLogin } from "@/redux/reducerUser";
-import { redirect } from "next/navigation";
-import { useRouter } from "next/router";
 
 export default function LoginPage() {
   const dispatch = useAppDispatch();
@@ -36,8 +34,6 @@ export default function LoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(userLogin(login));
-    // redirect("/admin/951753/dashboard");
-    // router.push("/admin/951753/dashboard");
   };
 
   return (
