@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { stockReducer } from "./reducer";
+import { stockReducer } from "./reducerStock";
+import {userReducer} from "./reducerUser";
 
 export const store = configureStore({
   reducer: {
-    top10Stocks: stockReducer
+    top10Stocks: stockReducer,
+    userAdmin: userReducer
   }
 });
 

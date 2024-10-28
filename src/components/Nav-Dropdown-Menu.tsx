@@ -10,7 +10,7 @@ import {
   NavigationMenuTrigger
 } from "@/components/ui/navigation-menu";
 import { useAppDispatch } from "@/redux/hook";
-import { setSector } from "@/redux/reducer";
+import { setSector } from "@/redux/reducerStock";
 
 const components: { title: string; description: string }[] = [
   {

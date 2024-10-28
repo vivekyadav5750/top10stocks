@@ -24,7 +24,8 @@ export const updateItem = createAsyncThunk(
       {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "x-auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzFmYzNjZmE3YTZmOGM2YTFkNWE0ZmMiLCJpYXQiOjE3MzAxMzY1MjYsImV4cCI6MTczMDE0MDEyNn0.f3nO5zqn7jepwLYr699ZLq-f5nhSp7se706RVbdkrfg"
         },
         body: JSON.stringify(data)
       }
@@ -37,17 +38,20 @@ export const updateItem = createAsyncThunk(
 export const deleteItem = createAsyncThunk(
   "top10Stocks/deleteItem",
   async (data: Stock) => {
+    console.log("deleteItem : ", data);
     const response = await fetch(
       `http://localhost:4000/api/stock/deleteStock/${data._id}`,
       {
         method: "DELETE",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "x-auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzFmYzNjZmE3YTZmOGM2YTFkNWE0ZmMiLCJpYXQiOjE3MzAxMzY1MjYsImV4cCI6MTczMDE0MDEyNn0.f3nO5zqn7jepwLYr699ZLq-f5nhSp7se706RVbdkrfg"
         },
         body: JSON.stringify(data)
       }
     );
     const response_data = (await response.json()) as StockState["data"];
+    console.log("response_data : ", response_data);
     return response_data;
   }
 );
@@ -58,7 +62,8 @@ export const addItem = createAsyncThunk(
     const response = await fetch(`http://localhost:4000/api/stock/addStock`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "x-auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzFmYzNjZmE3YTZmOGM2YTFkNWE0ZmMiLCJpYXQiOjE3MzAxMzY1MjYsImV4cCI6MTczMDE0MDEyNn0.f3nO5zqn7jepwLYr699ZLq-f5nhSp7se706RVbdkrfg"
       },
       body: JSON.stringify({...data.stock, categoryName: data.category})
     });

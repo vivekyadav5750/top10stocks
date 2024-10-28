@@ -9,7 +9,7 @@ import {
   ChevronUp
 } from "lucide-react";
 import { useAppDispatch } from "@/redux/hook";
-import { setSector } from "@/redux/reducer";
+import { setSector } from "@/redux/reducerStock";
 
 export default function Navbar() {
   const dispatch = useAppDispatch();

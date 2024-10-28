@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import ListItems from "./listItems";
 import AddStockForm from "./AddStockForm";
-import { addItem, fetchItems } from "@/redux/reducer";
+import { addItem, fetchItems } from "@/redux/reducerStock";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { Stock } from "@/types";
 import { Loader } from "lucide-react";

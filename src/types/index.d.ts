@@ -21,3 +21,8 @@ export type StockWithCategory = {
   category: string;
   stock: Stock;
 };
+
+export type User = {
+  email: string;
+  password: string;
+};

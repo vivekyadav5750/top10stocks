@@ -9,7 +9,7 @@ import {
   TableRow
 } from "./ui/table";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { fetchItems } from "@/redux/reducer";
+import { fetchItems } from "@/redux/reducerStock";
 import { Loader } from "lucide-react";
 
 const TABLE_COLUMNS = [

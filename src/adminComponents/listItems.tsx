@@ -1,6 +1,6 @@
 import { Stock } from "@/types";
 import React, { useEffect, useState } from "react";
-import {updateItem, deleteItem} from "@/redux/reducer";
+import {updateItem, deleteItem} from "@/redux/reducerStock";
 import { useAppDispatch } from "@/redux/hook";
 import { PencilLine, Trash2 } from "lucide-react";
 
@@ -48,7 +48,6 @@ export default function ListItems({ stock }: { stock: Stock }) {
   };
 
   const handleDelete = () => {
-    console.log("Delete");
     dispatch(deleteItem(stock));
   }
 
