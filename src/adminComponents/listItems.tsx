@@ -1,6 +1,6 @@
 import { Stock } from "@/types";
 import React, { useEffect, useState } from "react";
-import {updateItem, deleteItem} from "@/redux/reducerStock";
+import { updateItem, deleteItem } from "@/redux/reducerStock";
 import { useAppDispatch } from "@/redux/hook";
 import { PencilLine, Trash2 } from "lucide-react";
 
@@ -30,18 +30,18 @@ export default function ListItems({ stock }: { stock: Stock }) {
   const handleSave = () => {
     console.log("Save");
     setEditMode(!editMode);
-    
+
     const updatedStock = {
       // ...stock,
-      _id:stock._id,
-      name:stock.name,
+      _id: stock._id,
+      name: stock.name,
       marketCap,
       currentPrice,
       recommendedBuyPrice,
       oneYearReturn,
       high52,
       low52,
-      moreInfo:stock.moreInfo
+      moreInfo: stock.moreInfo
     };
     console.log("updatedStock : ", updatedStock);
     dispatch(updateItem(updatedStock));
@@ -49,7 +49,7 @@ export default function ListItems({ stock }: { stock: Stock }) {
 
   const handleDelete = () => {
     dispatch(deleteItem(stock));
-  }
+  };
 
   return (
     <tr key={stock.name}>
@@ -149,8 +149,10 @@ export default function ListItems({ stock }: { stock: Stock }) {
             Save{" "}
           </button>
         )}
-        <button className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-700" 
-        onClick={() => handleDelete()}>
+        <button
+          className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-700"
+          onClick={() => handleDelete()}
+        >
           <Trash2 />
         </button>
       </td>

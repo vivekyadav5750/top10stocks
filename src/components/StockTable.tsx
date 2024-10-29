@@ -28,7 +28,6 @@ export default function StockTable() {
   const stockState = useAppSelector((state) => state.top10Stocks);
   const categorySelected = stockState.categorySelected;
 
-
   useEffect(() => {
     disptach(fetchItems());
   }, [disptach]);

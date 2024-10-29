@@ -12,11 +12,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAppDispatch } from "@/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { userLogin } from "@/redux/reducerUser";
+import { LoaderCircle } from "lucide-react";
 
 export default function LoginPage() {
   const dispatch = useAppDispatch();
+  const status = useAppSelector((state) => state.userAdmin.status);
   // const router = useRouter();
   const [login, setLogin] = useState({
     email: "",
@@ -74,7 +76,12 @@ export default function LoginPage() {
           </CardContent>
           <CardFooter className="flex justify-between">
             {/* <Button variant="outline">Cancel</Button> */}
-            <Button>Submit</Button>
+            <Button disabled={status === "loading"}>
+              {status === "loading" && (
+                <LoaderCircle className="animate-spin" />
+              )}
+              Submit
+            </Button>
           </CardFooter>
         </form>
       </Card>

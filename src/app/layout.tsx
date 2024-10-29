@@ -3,8 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Popup from "@/components/Popup";
 import Providers from "@/redux/providers";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -43,11 +43,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable}   antialiased min-h-screen flex flex-col w-full `}
       >
         <Providers>
-          <Popup />
+          {/* <Popup /> */}
           <Navbar />
           {children}
           <Footer />
         </Providers>
+        <Toaster />
       </body>
     </html>
   );

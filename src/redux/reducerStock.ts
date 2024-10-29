@@ -1,5 +1,6 @@
 import { Stock, StockCategories, StockWithCategory } from "@/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "./store";
 
 type StockState = {
   data: StockCategories[];
@@ -16,16 +17,17 @@ export const fetchItems = createAsyncThunk(
   }
 );
 
-export const updateItem = createAsyncThunk(
+export const updateItem = createAsyncThunk<Stock, Stock, { state: RootState }>(
   "top10Stocks/updateItem",
-  async (data: Stock) => {
+  async (data: Stock, { getState }) => {
+    const { userAdmin } = getState();
     const response = await fetch(
       `http://localhost:4000/api/stock/updateStock/${data._id}`,
       {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "x-auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzFmYzNjZmE3YTZmOGM2YTFkNWE0ZmMiLCJpYXQiOjE3MzAxMzY1MjYsImV4cCI6MTczMDE0MDEyNn0.f3nO5zqn7jepwLYr699ZLq-f5nhSp7se706RVbdkrfg"
+          "x-auth-token": userAdmin.token
         },
         body: JSON.stringify(data)
       }
@@ -35,44 +37,42 @@ export const updateItem = createAsyncThunk(
   }
 );
 
-export const deleteItem = createAsyncThunk(
+export const deleteItem = createAsyncThunk<StockCategories[], Stock, { state: RootState }>(
   "top10Stocks/deleteItem",
-  async (data: Stock) => {
-    console.log("deleteItem : ", data);
+  async (data: Stock, { getState }) => {
+    const { userAdmin } = getState();
     const response = await fetch(
       `http://localhost:4000/api/stock/deleteStock/${data._id}`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "x-auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzFmYzNjZmE3YTZmOGM2YTFkNWE0ZmMiLCJpYXQiOjE3MzAxMzY1MjYsImV4cCI6MTczMDE0MDEyNn0.f3nO5zqn7jepwLYr699ZLq-f5nhSp7se706RVbdkrfg"
+          "x-auth-token": userAdmin.token
         },
         body: JSON.stringify(data)
       }
     );
     const response_data = (await response.json()) as StockState["data"];
-    console.log("response_data : ", response_data);
     return response_data;
   }
 );
 
-export const addItem = createAsyncThunk(
+export const addItem = createAsyncThunk<Stock, StockWithCategory, { state: RootState }>(
   "top10Stocks/addItem",
-  async (data: StockWithCategory) => {
+  async (data: StockWithCategory, {getState}) => {
+    const { userAdmin } = getState();
     const response = await fetch(`http://localhost:4000/api/stock/addStock`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzFmYzNjZmE3YTZmOGM2YTFkNWE0ZmMiLCJpYXQiOjE3MzAxMzY1MjYsImV4cCI6MTczMDE0MDEyNn0.f3nO5zqn7jepwLYr699ZLq-f5nhSp7se706RVbdkrfg"
+        "x-auth-token": userAdmin.token
       },
-      body: JSON.stringify({...data.stock, categoryName: data.category})
+      body: JSON.stringify({ ...data.stock, categoryName: data.category })
     });
     const response_data = (await response.json()) as Stock;
-    console.log("response_data : ", response_data);
     return response_data;
   }
 );
-
 
 const initialState: StockState = {
   loading: true,
@@ -131,7 +131,7 @@ export const stockSlice = createSlice({
           return category;
         });
       }
-    )
+    );
   }
 });
 
