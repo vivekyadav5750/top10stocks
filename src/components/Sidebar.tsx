@@ -2,8 +2,10 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 
 export default function Sidebar() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [sectorExpanded, setSectorExpanded] = useState(true);
 
@@ -67,11 +69,10 @@ export default function Sidebar() {
                 key={item.title}
                 // className={`text-md font-thin font-mono ${index % 2 === 0 ? 'bg-white' : 'bg-gray-200'} p-1`}
                 className={`text-md font-thin font-mono shadow-[rgba(37,142,133,0.2)_-3px_0px_2px_0px] p-1 rounded-sm hover:bg-white`}
-                onClick={() =>
-                  dispatch({
-                    type: "top10Stocks/setSector",
-                    payload: item.title
-                  })
+                onClick={() => { dispatch({
+                  type: "top10Stocks/setSector",
+                  payload: item.title
+                }); router.push(`/?category=${item.title}`); }
                 }
               >
                 {item.title}
@@ -102,10 +103,10 @@ export default function Sidebar() {
                   // className={`text-md font-mono ${index % 2 === 0 ? 'bg-white' : 'bg-gray-200'} p-1`}
                   className={`text-md font-thin font-mono shadow-[rgba(37,142,133,0.2)_-3px_0px_2px_0px] p-1 rounded-sm hover:bg-white`}
                   onClick={() =>
-                    dispatch({
+                    { dispatch({
                       type: "top10Stocks/setSector",
                       payload: item.title
-                    })
+                    }); router.push(`/?category=${item.title}`); }
                   }
                 >
                   {item.title}

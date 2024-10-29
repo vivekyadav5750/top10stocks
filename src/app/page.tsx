@@ -1,10 +1,21 @@
+"use client";
 import Sidebar from "../components/Sidebar";
 import StockTable from "../components/StockTable";
 import IPOSection from "../components/IPOSection";
 import StockTicker from "@/components/stockTicker";
 import Context from "@/components/Context";
+import { useSearchParams } from "next/navigation";
+import { useAppDispatch } from "@/redux/hook";
+import { setSector } from "@/redux/reducerStock";
 
 export default function HomePage() {
+  const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
+  const category = searchParams.get('category');
+  if (category) {
+    dispatch(setSector(category));
+  }
+
   const ipos = [
     {
       name: "IPO 1",

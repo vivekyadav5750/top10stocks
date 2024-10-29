@@ -10,8 +10,10 @@ import {
 } from "lucide-react";
 import { useAppDispatch } from "@/redux/hook";
 import { setSector } from "@/redux/reducerStock";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [sectorExpanded, setSectorExpanded] = useState(false);
@@ -56,7 +58,7 @@ export default function Navbar() {
           {NAV_ITEMS.map((item) => (
             <div
               key={item.title}
-              onClick={() => dispatch(setSector(item.title))}
+              onClick={() => {dispatch(setSector(item.title)); router.push(`/?category=${item.title}`);}}
             >
               <span className="w- flex text-md font-medium hover:bg-accent hover:text-accent-foreground px-4 py-2 rounded-md   ">
                 {item.title}
@@ -93,6 +95,7 @@ export default function Navbar() {
                 onClick={() => {
                   dispatch(setSector(item.title));
                   setIsMenuOpen(!isMenuOpen);
+                  router.push(`/?category=${item.title}`);
                 }}
               >
                 {item.title}
@@ -122,6 +125,7 @@ export default function Navbar() {
                     onClick={() => {
                       dispatch(setSector(item.title));
                       setIsMenuOpen(!isMenuOpen);
+                      router.push(`/?category=${item.title}`);
                     }}
                   >
                     {item.title}

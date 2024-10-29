@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { useAppDispatch } from "@/redux/hook";
 import { setSector } from "@/redux/reducerStock";
+import { useRouter } from "next/navigation";
 
 const components: { title: string; description: string }[] = [
   {
@@ -47,6 +48,7 @@ const components: { title: string; description: string }[] = [
 ];
 
 export function NavigationMenuDemo() {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   return (
     <NavigationMenu>
@@ -59,7 +61,7 @@ export function NavigationMenuDemo() {
                 <ListItem
                   key={component.title}
                   title={component.title}
-                  onClick={() => dispatch(setSector(component.title))}
+                  onClick={() => {dispatch(setSector(component.title)); router.push(`/?category=${component.title}`);}}
                 >
                   {component.description}
                 </ListItem>
