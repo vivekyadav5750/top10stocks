@@ -7,6 +7,7 @@ import Context from "@/components/Context";
 import { useSearchParams } from "next/navigation";
 import { useAppDispatch } from "@/redux/hook";
 import { setSector } from "@/redux/reducerStock";
+import { Suspense } from "react";
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
@@ -59,6 +60,8 @@ export default function HomePage() {
   ];
 
   return (
+    <Suspense>
+
     <main className="w-full mt-16  ">
       <StockTicker />
       <div className="flex w-full flex-col md:flex-row md:space-x-4 md:p-2 mt-2 ">
@@ -70,5 +73,6 @@ export default function HomePage() {
       </div>
       <IPOSection ipoList={ipos} smpIpos={smpIpos} />
     </main>
+    </Suspense>
   );
 }
