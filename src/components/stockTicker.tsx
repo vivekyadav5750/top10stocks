@@ -12,6 +12,7 @@ interface Stock {
 export default function StockTicker() {
   const [stickyStockData, setStickyStockData] = useState<Stock[]>([]);
 
+  // get stickyStockData in market hours and every 2.55 seconds ...
   useEffect(() => {
     const fetchStockData = async () => {
       try {
@@ -28,13 +29,35 @@ export default function StockTicker() {
         console.error("Error fetching stock data:", error);
       }
     };
-
-    fetchStockData(); // Initial fetch
-    const intervalId = setInterval(fetchStockData, 2550);
-
+  
+    const isMarketOpen = () => {
+      const now = new Date();
+      const day = now.getDay();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+  
+      // Market is open Monday to Friday, 9:15 AM - 3:30 PM
+      const isWeekday = day >= 1 && day <= 5; // 1 = Monday, 5 = Friday
+      const isDuringTradingHours =
+        (hours > 9 || (hours === 9 && minutes >= 15)) && 
+        (hours < 15 || (hours === 15 && minutes <= 30));
+  
+      return isWeekday && isDuringTradingHours;
+    };
+  
+    // Initial fetch for data regardless of market hours
+    fetchStockData();
+  
+    const intervalId = setInterval(() => {
+      if (isMarketOpen()) {
+        fetchStockData();
+      }
+    }, 2550);
+  
     // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
+  
 
   return (
     <div className="w-full mt-1 bg-gray-800 text-white h-10 flex items-center overflow-hidden ">

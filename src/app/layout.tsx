@@ -20,7 +20,6 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Top10Stock - Best Stock Recommendations",
   description: "Top 10 stocks in large cap, mid cap, small cap, and more.",
-  viewport: "width=device-width, initial-scale=1", // SEO-friendly responsive setting
   keywords: "stocks, large cap, mid cap, small cap, IPO, stock market",
   authors: [{ name: "Top10Stock Team" }], // Author for SEO
   openGraph: {
@@ -31,6 +30,13 @@ export const metadata: Metadata = {
     type: "website"
   }
 };
+
+// Export the viewport setting separately
+export const viewport = {
+  width: "device-width",
+  initialScale: 1
+};
+
 
 export default function RootLayout({
   children
