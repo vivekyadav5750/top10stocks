@@ -11,7 +11,7 @@ type StockState = {
 export const fetchItems = createAsyncThunk(
   "top10Stocks/fetchItems",
   async () => {
-    const response = await fetch("http://localhost:4000/api/stock/");
+    const response = await fetch("https://top10stocks-backend.onrender.com/api/stock/");
     const data = (await response.json()) as StockCategories[];
     return data;
   }
@@ -22,7 +22,7 @@ export const updateItem = createAsyncThunk<Stock, Stock, { state: RootState }>(
   async (data: Stock, { getState }) => {
     const { userAdmin } = getState();
     const response = await fetch(
-      `http://localhost:4000/api/stock/updateStock/${data._id}`,
+      `https://top10stocks-backend.onrender.com/api/stock/updateStock/${data._id}`,
       {
         method: "PUT",
         headers: {
@@ -42,7 +42,7 @@ export const deleteItem = createAsyncThunk<StockCategories[], Stock, { state: Ro
   async (data: Stock, { getState }) => {
     const { userAdmin } = getState();
     const response = await fetch(
-      `http://localhost:4000/api/stock/deleteStock/${data._id}`,
+      `https://top10stocks-backend.onrender.com/api/stock/deleteStock/${data._id}`,
       {
         method: "DELETE",
         headers: {
@@ -61,7 +61,7 @@ export const addItem = createAsyncThunk<Stock, StockWithCategory, { state: RootS
   "top10Stocks/addItem",
   async (data: StockWithCategory, {getState}) => {
     const { userAdmin } = getState();
-    const response = await fetch(`http://localhost:4000/api/stock/addStock`, {
+    const response = await fetch(`https://top10stocks-backend.onrender.com/api/stock/addStock`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

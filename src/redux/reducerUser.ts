@@ -25,7 +25,7 @@ export const userLogin = createAsyncThunk(
   "user/login",
   async (data: User, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:4000/api/user/login", {
+      const response = await fetch("https://top10stocks-backend.onrender.com/api/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
