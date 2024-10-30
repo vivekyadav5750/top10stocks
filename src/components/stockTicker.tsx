@@ -16,14 +16,14 @@ export default function StockTicker() {
     const fetchStockData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:4000/api/stock/getStickyStocks"
+          "https://top10stocks-backend.onrender.com/api/stock/getStickyStocks"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
         setStickyStockData(data);
-        console.log("Stocks updated", data);
+        // console.log("Stocks updated", data);
       } catch (error) {
         console.error("Error fetching stock data:", error);
       }
