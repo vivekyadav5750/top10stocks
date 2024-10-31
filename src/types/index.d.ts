@@ -1,13 +1,16 @@
 export type Stock = {
   _id?: string;
   name: string;
+  symbol?: string,
   currentPrice: number;
+  priceChangePercent: number;
   marketCap: string;
-  recommendedBuyPrice: number;
+  recommendedBuyPrice: string;
   oneYearReturn: string;
   high52: number;
   low52: number;
-  moreInfo: string;
+  moreDetailLink: string;
+  note: string;
 };
 
 export type StockCategories = {

@@ -7,7 +7,7 @@ import Context from "@/components/Context";
 import { useSearchParams } from "next/navigation";
 import { useAppDispatch } from "@/redux/hook";
 import { setSector } from "@/redux/reducerStock";
-import { Suspense } from "react";
+// import { Suspense } from "react";
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
@@ -60,7 +60,7 @@ export default function HomePage() {
   ];
 
   return (
-    <Suspense>
+    // <Suspense>
 
     <main className="w-full mt-16  ">
       <StockTicker />
@@ -73,6 +73,6 @@ export default function HomePage() {
       </div>
       <IPOSection ipoList={ipos} smpIpos={smpIpos} />
     </main>
-    </Suspense>
+    // </Suspense>
   );
 }

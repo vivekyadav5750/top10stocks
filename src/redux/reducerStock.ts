@@ -11,6 +11,7 @@ type StockState = {
 export const fetchItems = createAsyncThunk(
   "top10Stocks/fetchItems",
   async () => {
+    // const response = await fetch("http://localhost:4000/api/stock/");
     const response = await fetch("https://top10stocks-backend.onrender.com/api/stock/");
     const data = (await response.json()) as StockCategories[];
     return data;

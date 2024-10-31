@@ -11,6 +11,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { fetchItems } from "@/redux/reducerStock";
 import { Loader } from "lucide-react";
+import Link from "next/link";
 
 const TABLE_COLUMNS = [
   // "Company",
@@ -20,17 +21,48 @@ const TABLE_COLUMNS = [
   "1-Year Return",
   "52Week High",
   "52Week Low",
-  "More Details"
+  "Notes/Comments"
 ];
 
 export default function StockTable() {
-  const disptach = useAppDispatch();
+  const dispatch = useAppDispatch();
   const stockState = useAppSelector((state) => state.top10Stocks);
   const categorySelected = stockState.categorySelected;
 
+  // useEffect(() => {
+  //   const isMarketOpen = () => {
+  //     const now = new Date();
+  //     const day = now.getDay();
+  //     const hours = now.getHours();
+  //     const minutes = now.getMinutes();
+
+  //     // Market is open Monday to Friday, 9:15 AM - 3:30 PM
+  //     const isWeekday = day >= 1 && day <= 5; // 1 = Monday, 5 = Friday
+  //     const isDuringTradingHours =
+  //       (hours > 9 || (hours === 9 && minutes >= 15)) &&
+  //       (hours < 15 || (hours === 15 && minutes <= 30));
+
+  //     return isWeekday && isDuringTradingHours;
+  //   };
+
+  //   const fetchStockData = () => {
+  //     if (isMarketOpen()) {
+  //       console.log("Fetching stock data... Market hours");
+  //       dispatch(fetchItems());
+  //     }
+  //   };
+  //   // Initial fetch if market is open
+  //   fetchStockData();
+
+  //   const intervalId = setInterval(fetchStockData, 5050);
+
+  //   // Cleanup interval on component unmount
+  //   return () => clearInterval(intervalId);
+  // }, [dispatch]);
+
   useEffect(() => {
-    disptach(fetchItems());
-  }, [disptach]);
+    dispatch(fetchItems());
+  }, [dispatch]);
 
   return (
     <div>
@@ -78,11 +110,23 @@ export default function StockTable() {
                       >
                         {/* Sticky column for the name */}
                         <TableCell className="sticky left-0 z-20 bg-inherit text-left ">
-                          {stock.name}
+                          <Link href={stock.moreDetailLink}>{stock.name}</Link>
                           <span className="bg-border h-full w-[1px] inline-block absolute top-0 right-0 bottom-0"></span>
                         </TableCell>
                         <TableCell className="w-min">
-                          {stock.currentPrice}
+                          <span
+                            className={`text-sm  ${
+                              stock.priceChangePercent > 0
+                                ? "text-green-500"
+                                : "text-red-500"
+                            }`}
+                          >
+                            <sup>
+                              {stock.priceChangePercent}%
+                              {stock.priceChangePercent > 0 ? "▲" : "▼"}{" "}
+                            </sup>
+                            ₹{stock.currentPrice}
+                          </span>
                         </TableCell>
                         <TableCell className="w-min">
                           {stock.marketCap}
@@ -91,19 +135,19 @@ export default function StockTable() {
                           {stock.recommendedBuyPrice}
                         </TableCell>
                         <TableCell className="w-min">
-                          {stock.oneYearReturn}
+                          {stock.oneYearReturn} %
                         </TableCell>
                         <TableCell className="w-min">{stock.high52}</TableCell>
                         <TableCell className="w-min">{stock.low52}</TableCell>
                         <TableCell className="w-auto">
-                          <a
-                            href={stock.moreInfo}
+                          {/* <a
+                            href={stock.moreDetailLink}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-500 hover:underline"
-                          >
-                            View on MoneyControl
-                          </a>
+                          > */}
+                          {stock.note}
+                          {/* </a> */}
                         </TableCell>
                       </TableRow>
                     ))

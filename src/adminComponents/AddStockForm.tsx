@@ -10,12 +10,14 @@ export default function AddStockForm({ onClose, onSubmit }: AddStockFormProps) {
   const [newStock, setNewStock] = useState<Stock>({
     name: "",
     currentPrice: 0,
+    priceChangePercent: 0,
     marketCap: "",
-    recommendedBuyPrice: 0,
+    recommendedBuyPrice: '0',
     oneYearReturn: "",
     high52: 0,
     low52: 0,
-    moreInfo: ""
+    moreDetailLink: "",
+    note: ""
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,7 +79,7 @@ export default function AddStockForm({ onClose, onSubmit }: AddStockFormProps) {
             <div className="mb-2">
               <label className="block">Recommended Buy Price</label>
               <input
-                type="number"
+                type="text"
                 name="recommendedBuyPrice"
                 value={newStock.recommendedBuyPrice}
                 onChange={handleChange}
@@ -128,8 +130,8 @@ export default function AddStockForm({ onClose, onSubmit }: AddStockFormProps) {
               <label className="block">More Details Link</label>
               <input
                 type="text"
-                name="moreInfo"
-                value={newStock.moreInfo}
+                name="moreDetailLink"
+                value={newStock.moreDetailLink}
                 onChange={handleChange}
                 className="border p-2 w-full"
                 required

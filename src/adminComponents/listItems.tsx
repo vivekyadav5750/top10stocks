@@ -12,7 +12,7 @@ export default function ListItems({ stock }: { stock: Stock }) {
   const [currentPrice, setCurrentPrice] = useState(stock.currentPrice || 0);
   const [marketCap, setMarketCap] = useState(stock.marketCap || "");
   const [recommendedBuyPrice, setRecommendedBuyPrice] = useState(
-    stock.recommendedBuyPrice || 0
+    stock.recommendedBuyPrice || '0'
   );
   const [oneYearReturn, setOneYearReturn] = useState(stock.oneYearReturn || "");
   const [high52, setHigh52] = useState(stock.high52 || 0);
@@ -35,13 +35,16 @@ export default function ListItems({ stock }: { stock: Stock }) {
       // ...stock,
       _id: stock._id,
       name: stock.name,
+      symbol: stock.symbol,
       marketCap,
       currentPrice,
+      priceChangePercent: stock.priceChangePercent,
       recommendedBuyPrice,
       oneYearReturn,
       high52,
       low52,
-      moreInfo: stock.moreInfo
+      moreDetailLink: stock.moreDetailLink,
+      note: stock.note,
     };
     console.log("updatedStock : ", updatedStock);
     dispatch(updateItem(updatedStock));
@@ -85,7 +88,7 @@ export default function ListItems({ stock }: { stock: Stock }) {
           type="text"
           value={recommendedBuyPrice}
           readOnly={!editMode}
-          onChange={(e) => setRecommendedBuyPrice(Number(e.target.value))}
+          onChange={(e) => setRecommendedBuyPrice((e.target.value))}
           name="recommendedBuyPrice"
           className={`${
             editMode ? "border-2 border-gray-300" : "border-none bg-transparent"
@@ -129,7 +132,7 @@ export default function ListItems({ stock }: { stock: Stock }) {
         />
       </td>
       <td className="p-3 sm:p-3 text-left">
-        <a href={stock.moreInfo}>More Details</a>
+        <a href={stock.moreDetailLink}>More Details</a>
       </td>
       <td className="flex p-3 sm:p-3 text-left space-x-2">
         {!editMode ? (
